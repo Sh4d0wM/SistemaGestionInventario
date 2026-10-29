@@ -1,0 +1,58 @@
+@model SistemaGestionInventario.Models.Producto
+
+@{
+    ViewData["Title"] = "Eliminar producto";
+}
+
+<h1>Eliminar producto</h1>
+
+<h3>¿Estás seguro de que deseas eliminar este producto?</h3>
+
+<div>
+    <h4>Datos del producto</h4>
+    <hr />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Precio)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Precio)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="d-flex gap-3 mt-4">
+            <button type="submit" class="btn btn-danger">
+                Eliminar producto
+            </button>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Volver a la lista
+            </a>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,58 @@
+@model SistemaGestionInventario.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalles del producto";
+}
+
+<h1>Detalles del producto</h1>
+
+<h4>Información del producto</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <dl class="row">
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Precio)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Precio)
+            </dd>
+
+            <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Stock)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Stock)
+            </dd>
+
+        </dl>
+
+        <div class="d-flex gap-3 mt-4">
+            <a asp-action="Edit"
+               asp-route-id="@Model.Id"
+               class="btn btn-primary">
+                Editar producto
+            </a>
+
+            <a asp-action="Index" class="btn btn-secondary">
+                Volver a la lista
+            </a>
+        </div>
+    </div>
+</div>

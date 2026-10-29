@@ -1,0 +1,65 @@
+@model IEnumerable<SistemaGestionInventario.Models.Producto>
+
+@{
+    ViewData["Title"] = "Lista de productos";
+}
+
+<h1>Lista de productos</h1>
+
+<div class="mb-3">
+    <a asp-action="Create"
+       class="btn"
+       style="background-color: #D8EAD5; color: #355E3B; border: 1px solid #BBD8B6; border-radius: 8px;">
+        + Crear producto
+    </a>
+</div>
+
+<table class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Descripcion</td>
+                <td>@item.Precio</td>
+                <td>@item.Stock</td>
+
+                <td class="text-end">
+                    <div class="d-flex justify-content-end gap-2 flex-wrap">
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm"
+                           style="background-color: #DCE8FA; color: #385780; border: 1px solid #C3D5F0; border-radius: 7px;">
+                            Editar
+                        </a>
+
+                        <a asp-action="Details"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm"
+                           style="background-color: #D8F0EF; color: #326967; border: 1px solid #B9E0DE; border-radius: 7px;">
+                            Detalles
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn btn-sm"
+                           style="background-color: #F8DEDF; color: #914B51; border: 1px solid #EFC4C7; border-radius: 7px;">
+                            Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

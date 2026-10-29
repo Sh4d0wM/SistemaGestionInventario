@@ -1,0 +1,64 @@
+@model SistemaGestionInventario.Models.Producto
+
+@{
+    ViewData["Title"] = "Editar producto";
+}
+
+<h1>Editar producto</h1>
+
+<h4>Producto</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post">
+
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group mb-3">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" maxlength="101" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Descripcion" class="control-label"></label>
+                <input asp-for="Descripcion" class="form-control" maxlength="251" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio"
+                       class="form-control"
+                       type="text"
+                       inputmode="decimal"
+                       placeholder="Ej. 2,50" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Stock" class="control-label"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary">
+                    Guardar cambios
+                </button>
+
+                <a asp-action="Index" class="btn btn-secondary">
+                    Volver a la lista
+                </a>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
