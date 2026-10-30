@@ -1,42 +1,43 @@
 @model SistemaGestionInventario.Models.Categoria
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear categoría";
 }
 
-<h1>Create</h1>
-
-<h4>Categoria</h4>
+<h1>Crear categoría</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-5">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Nombre" class="form-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label"></label>
                 <input asp-for="Descripcion" class="form-control" />
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="Productos" class="control-label"></label>
-                <input asp-for="Productos" class="form-control" />
-                <span asp-validation-for="Productos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn"
+                        style="background-color: #E6DDF5; color: #5B4580; border: 1px solid #D2C3EC; border-radius: 8px;">
+                    Guardar
+                </button>
+                <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius: 8px;">
+                    Volver a la lista
+                </a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
