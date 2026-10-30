@@ -25,5 +25,10 @@ namespace SistemaGestionInventario.Models
         [Range(0, 10000, ErrorMessage = "El stock debe estar entre 0 y 10000.")]
         [Display(Name = "Stock")]
         public int Stock { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "Debe seleccionar una categoría.")]
+        [Display(Name = "Categoría")]
+        public int CategoriaId { get; set; }
+        public Categoria? Categoria { get; set; }
+
     }
 }
