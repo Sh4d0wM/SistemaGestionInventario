@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +46,8 @@ public class ProductosController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Stock,CategoriaId")] Producto producto)
     {
+        LeerPrecioDesdeFormulario(producto);
+
         if (ModelState.IsValid)
         {
             _context.Add(producto);
@@ -77,6 +78,8 @@ public class ProductosController : Controller
     {
         if (id != producto.Id) return NotFound();
 
+        LeerPrecioDesdeFormulario(producto);
+
         if (ModelState.IsValid)
         {
             try
@@ -104,6 +107,7 @@ public class ProductosController : Controller
         }
 
         var producto = await _context.Productos
+            .Include(p => p.Categoria)
             .FirstOrDefaultAsync(m => m.Id == id);
 
         if (producto == null)
@@ -164,12 +168,11 @@ public class ProductosController : Controller
             ModelState.AddModelError(
                 nameof(Producto.Precio),
                 "Ingrese un precio válido. Ejemplo: 2,50.");
-        }           
+        }
     }
-   
+
     private bool productExists(int? id)
     {
         return _context.Productos.Any(e => e.Id == id);
     }
 }
-

@@ -4,7 +4,19 @@ using SistemaGestionInventario.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(options =>
+{
+    options.ModelBindingMessageProvider.SetAttemptedValueIsInvalidAccessor(
+        (valor, campo) => $"El valor '{valor}' no es válido para {campo}.");
+    options.ModelBindingMessageProvider.SetValueMustBeANumberAccessor(
+        campo => $"El campo {campo} debe ser un número.");
+    options.ModelBindingMessageProvider.SetValueMustNotBeNullAccessor(
+        campo => $"El campo {campo} es obligatorio.");
+    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(
+        valor => $"El valor '{valor}' no es válido.");
+    options.ModelBindingMessageProvider.SetUnknownValueIsInvalidAccessor(
+        campo => $"El valor ingresado no es válido para {campo}.");
+})
     .AddDataAnnotationsLocalization();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
