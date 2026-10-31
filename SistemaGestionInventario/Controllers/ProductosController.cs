@@ -1,8 +1,9 @@
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SistemaGestionInventario.Models;
 using SistemaGestionInventario.Data;
+using SistemaGestionInventario.Models;
 using System.Globalization;
 
 public class ProductosController : Controller
@@ -17,99 +18,64 @@ public class ProductosController : Controller
     // GET: PRODUCTOS
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Productos.ToListAsync());
+        var applicationDbContext = _context.Productos.Include(p => p.Categoria);
+        return View(await applicationDbContext.ToListAsync());
     }
 
     // GET: PRODUCTOS/Details/5
     public async Task<IActionResult> Details(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (id == null) return NotFound();
 
         var producto = await _context.Productos
+            .Include(p => p.Categoria)
             .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (producto == null)
-        {
-            return NotFound();
-        }
+        if (producto == null) return NotFound();
 
         return View(producto);
     }
-
-    // GET: PRODUCTOS/Create
+    // GET: Productos/Create
     public IActionResult Create()
     {
+        ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre");
         return View();
     }
 
-    // POST: PRODUCTOS/Create
+    // POST: Productos/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(
-        [Bind("Id,Nombre,Descripcion,Precio,Stock")] Producto producto)
+    public async Task<IActionResult> Create([Bind("Id,Nombre,Descripcion,Precio,Stock,CategoriaId")] Producto producto)
     {
-        LeerPrecioDesdeFormulario(producto);
-
         if (ModelState.IsValid)
         {
             _context.Add(producto);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
+        // Si hay un error de validación, recargamos la lista desplegable para que no desaparezca
+        ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre", producto.CategoriaId);
         return View(producto);
     }
 
-    // GET: PRODUCTOS/Edit/5
+    // GET: Productos/Edit/5
     public async Task<IActionResult> Edit(int? id)
     {
-        if (id == null)
-        {
-            return NotFound();
-        }
+        if (id == null) return NotFound();
 
         var producto = await _context.Productos.FindAsync(id);
+        if (producto == null) return NotFound();
 
-        if (producto == null)
-        {
-            return NotFound();
-        }
-
+        ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre", producto.CategoriaId);
         return View(producto);
     }
 
-    // POST: PRODUCTOS/Edit/5
+    // POST: Productos/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(
-        int? id,
-        [Bind("Id,Nombre,Descripcion,Precio,Stock")] Producto producto)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,Nombre,Descripcion,Precio,Stock,CategoriaId")] Producto producto)
     {
-        if (id != producto.Id)
-        {
-            return NotFound();
-        }
-
-        if (!string.IsNullOrEmpty(producto.Nombre) &&
-            producto.Nombre.Length > 100)
-        {
-            ModelState.AddModelError(
-                nameof(producto.Nombre),
-                "El nombre no puede superar los 100 caracteres.");
-        }
-
-        if (!string.IsNullOrEmpty(producto.Descripcion) &&
-            producto.Descripcion.Length > 250)
-        {
-            ModelState.AddModelError(
-                nameof(producto.Descripcion),
-                "La descripción no puede superar los 250 caracteres.");
-        }
-
-        LeerPrecioDesdeFormulario(producto);
+        if (id != producto.Id) return NotFound();
 
         if (ModelState.IsValid)
         {
@@ -120,19 +86,12 @@ public class ProductosController : Controller
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductoExists(producto.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                if (!productExists(producto.Id)) return NotFound();
+                else throw;
             }
-
             return RedirectToAction(nameof(Index));
         }
-
+        ViewData["CategoriaId"] = new SelectList(_context.Categoria, "Id", "Nombre", producto.CategoriaId);
         return View(producto);
     }
 
@@ -207,8 +166,8 @@ public class ProductosController : Controller
                 "Ingrese un precio válido. Ejemplo: 2,50.");
         }           
     }
-
-    private bool ProductoExists(int? id)
+   
+    private bool productExists(int? id)
     {
         return _context.Productos.Any(e => e.Id == id);
     }

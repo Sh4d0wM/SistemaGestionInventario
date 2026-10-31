@@ -3,12 +3,9 @@
 @{
     ViewData["Title"] = "Detalles del producto";
 }
-
 <h1>Detalles del producto</h1>
-
 <h4>Información del producto</h4>
 <hr />
-
 <div class="row">
     <div class="col-md-6">
         <dl class="row">
@@ -39,6 +36,14 @@
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Stock)
+            </dd>
+
+            <!-- AÑADIDO: Muestra el nombre de la categoría relacionada -->
+            <dt class="col-sm-4">
+                Categoría
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Categoria.Nombre)
             </dd>
 
         </dl>
