@@ -1,8 +1,8 @@
 # Sistema de Gestión de Inventario
 
-*Tema asignado (Grupo 1):* Relación uno a muchos entre 
-*Categoría* (entidad principal) 
-*Producto* (entidad dependiente).
+**Tema asignado (Grupo 1):** Relación uno a muchos entre 
+**Categoría** (entidad principal) 
+**Producto** (entidad dependiente).
 
 ## Integrantes y aportes
 
