@@ -4,10 +4,6 @@
 **Categoría** (entidad principal) 
 **Producto** (entidad dependiente).
 
-**Materia:** Desarrollo web para la integración de tecnologías · **NRC:** 36754 · **Universidad de las Fuerzas Armadas ESPE**
-
-Aplicación web desarrollada con **ASP.NET Core MVC (.NET 10)**, **Entity Framework Core** y **SQL Server Express**. Implementa dos CRUD completos, validaciones con DataAnnotations en español y una relación uno a muchos: una categoría tiene muchos productos y cada producto pertenece a una sola categoría.
-
 ## Integrantes y aportes
 
 | Integrante | Aporte |
@@ -23,25 +19,19 @@ Aplicación web desarrollada con **ASP.NET Core MVC (.NET 10)**, **Entity Framew
 
 **Producto** (dependiente): `Id`, `Nombre` (obligatorio, máx. 100), `Descripcion` (opcional, máx. 250), `Precio` (decimal(10,2)), `Stock` (0 a 10000), `CategoriaId` (FK hacia Categoria), `Categoria` (navegación).
 
-## Migraciones
-
-1. `InitialCreate`: creación inicial de la tabla Productos.
-2. `ValidacionesProducto`: restricciones de longitud y tipos de datos.
-3. `AgregarCategoria`: tabla Categoria y clave foránea `CategoriaId` en Productos.
-
-## Componente autónomo
-
-En el formulario de Producto, la categoría se elige desde una **lista desplegable** (por nombre) en lugar de escribir el número, y se eliminó el campo duplicado de la propiedad de navegación. El listado y el detalle muestran el nombre de la categoría. La lista se vuelve a cargar cuando hay errores de validación.
-
-Archivos modificados: `Controllers/ProductosController.cs` y `Views/Productos/` (`Create`, `Edit`, `Index`, `Details`).
-
-## Requisitos
-
-- Visual Studio 2026 Community
-- .NET 10 SDK
-- SQL Server 2025 Express (instancia `localhost\SQLEXPRESS`)
-- SQL Server Management Studio (SSMS) 22
-
 ## Pasos para ejecutar el proyecto
 
 1. Clonar el repositorio:
+git clone https://github.com/Sh4d0wM/SistemaGestionInventario.git
+
+2. Abrir `SistemaGestionInventario.slnx` en Visual Studio.
+   
+3. Verificar la cadena de conexión en `appsettings.json`:
+   ```json
+   "DefaultConnection": "Server=localhost\\SQLEXPRESS;Database=InventarioDB;Trusted_Connection=True;TrustServerCertificate=True;"
+   ```
+4. En la **Consola del Administrador de paquetes** ejecutar:
+Update-Database
+Esto crea la base de datos `InventarioDB` con las tablas `Categoria` y `Productos`.
+
+5. Ejecutar con **F5**. Desde el menú principal se accede a **Productos** y **Categorías**.
